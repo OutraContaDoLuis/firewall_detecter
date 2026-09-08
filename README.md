@@ -1,2 +1,2 @@
-# firewall_detecter
-An firewall detecter made in python
+# FireWall Detecter
+An firewall detecter made in python by Luis Henrique Campaner

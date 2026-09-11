@@ -1,4 +1,7 @@
+
 import socket
+
+from lib.asciiart import Color
 
 class WAFDetecter:
     def __init__(self, host: str):
@@ -9,29 +12,36 @@ class WAFDetecter:
         hostOn = self.pingDomain()
 
         if hostOn == False:
-            print(' \n[!] Domain is down!')
+            print(' \n[!] Domain not found!')
             return
 
-        print(' \n[✓] Domain up!')
-
+        print(f' \n{Color.BOLD}{Color.GREEN}[✓] Domain up! {Color.RESET}')
 
 
     def pingDomain(self) -> bool:
-        print(' \n[#] Pinging Domain first ... ')
+        print(f' \n{Color.BOLD}{Color.YELLOW}[#] Pinging Domain first ... {Color.RESET}')
 
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.connect((self.host, 80))
+        except OSError as err:
+            print(f' \n[!] OSError explodes on screen!')
+            print(f' [!] Error: {err}')
+            return False
         except socket.gaierror:
-            print('')
+            print(f' \n{Color.BOLD}{Color.RED}[!] An exception explodes! {Color.RESET}')
             return False
         else:
             sock.close()
             return True
 
 
+    def sendAttack(self):
+        pass
+
+
 def main():
-    domain = input(' Please, type the domain which you want check if firewall exists: ')
+    domain = input(f' \n{Color.BOLD}[.] Please, type the domain which you want check if firewall exists: {Color.RESET}')
 
     wafDetecter = WAFDetecter(domain)
     wafDetecter.run()
